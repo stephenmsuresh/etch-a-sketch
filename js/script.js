@@ -1,10 +1,13 @@
 const board = document.querySelector("#drawing-board");
-const slider = document.querySelector('#grid-size');
+const gridSize = document.querySelector('#grid-size');
 let color = '#000000';
-createGrid(slider.value);
+let sizeDisplay = document.querySelector('#size-display');
+createGrid(gridSize.value);
+sizeDisplay.innerText = gridSize.value;
 
-slider.addEventListener('change', (e) => {
-    createGrid(slider.value);
+gridSize.addEventListener('change', (e) => {
+    createGrid(gridSize.value);
+    sizeDisplay.innerText = `${gridSize.value}`;
 })
 
 function createGrid(rowsAndCols) {
@@ -16,7 +19,7 @@ function createGrid(rowsAndCols) {
         for (let j = 0; j < rowsAndCols; j++) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
-            cell.setAttribute('draggable','false');
+            cell.setAttribute('draggable', 'false');
             cell.addEventListener('mouseover', (e) => {
                 colorIn(e, color);
             })
@@ -42,6 +45,17 @@ rainbowButton.addEventListener('click', (e) => {
     color = 'rainbow';
 })
 
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', (e) => {
+    clearGrid();
+})
+
+function clearGrid() {
+    let grid = Array.from(document.querySelectorAll('.cell'));
+    grid.forEach(element => {
+        element.removeAttribute("style");
+    })
+}
 
 
 function colorIn(e, selectedColor) {
@@ -50,11 +64,9 @@ function colorIn(e, selectedColor) {
     //if selected color
     if (selectedColor === 'rainbow') {
         let hex = (Math.floor(Math.random() * 16777215).toString(16));
-        console.log(hex);
         e.target.style.cssText = `background-color: #${hex}`;
     }
     else {
-        console.log(color);
         e.target.style.cssText = `background-color: ${color}`;
     }
 }

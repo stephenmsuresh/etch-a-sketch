@@ -3,9 +3,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: lightslategray
+    background-color: rgb(56, 60, 65)
 }
 
+#header{
+    color: white;
+}
 #content {
     display: flex;
     gap: 10px;
@@ -35,6 +38,11 @@ body {
 #colors{
     padding: 0;
     margin: 0;
+}
+
+#size-display{
+    font-size: 30px;
+    color: white;
 }
 
 #grid-size{
