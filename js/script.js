@@ -20,9 +20,14 @@ function createGrid(rowsAndCols) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
             cell.setAttribute('draggable', 'false');
-            cell.addEventListener('mouseover', (e) => {
-                colorIn(e, color);
-            })
+            //https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element
+            // (['click', 'hover']).forEach((evt) => {
+            //     cell.addEventListener(evt, (e) => {
+            //         colorIn(e, color);
+            //     })
+            // })
+            cell.addEventListener('mouseover', e => colorIn(e, color));
+            cell.addEventListener('click', e => colorIn(e, color));
             grid.appendChild(cell);
         }
         board.appendChild(grid);
@@ -60,7 +65,7 @@ function clearGrid() {
 
 function colorIn(e, selectedColor) {
     //if left click button is not pressed don't do anything
-    if (e.buttons !== 1) return;
+    if (e.buttons !== 1 && e.type !== 'click') return;
     //if selected color
     if (selectedColor === 'rainbow') {
         let hex = (Math.floor(Math.random() * 16777215).toString(16));
