@@ -1,6 +1,6 @@
 const board = document.querySelector("#drawing-board");
 const slider = document.querySelector('#grid-size');
-let color = 'black';
+let color = '#000000';
 createGrid(slider.value);
 
 slider.addEventListener('change', (e) => {
@@ -16,7 +16,7 @@ function createGrid(rowsAndCols) {
         for (let j = 0; j < rowsAndCols; j++) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
-            // cell.setAttribute('draggable','false');
+            cell.setAttribute('draggable','false');
             cell.addEventListener('mouseover', (e) => {
                 colorIn(e, color);
             })
@@ -26,16 +26,35 @@ function createGrid(rowsAndCols) {
     }
 }
 
+const colorButton = document.querySelector('#colors');
+colorButton.addEventListener('change', (e) => {
+    color = document.querySelector('#colors').value;
+})
+
+const blackButton = document.querySelector('#black');
+blackButton.addEventListener('click', (e) => {
+    color = '#000000';
+    document.querySelector('#colors').value = color;
+})
+
+const rainbowButton = document.querySelector('#rainbow');
+rainbowButton.addEventListener('click', (e) => {
+    color = 'rainbow';
+})
+
 
 
 function colorIn(e, selectedColor) {
-    //if buttons are not pressed
-    // console.log(e.buttons)
+    //if left click button is not pressed don't do anything
     if (e.buttons !== 1) return;
-    if (selectedColor === 'black') {
-        e.target.classList.add('filled-black')
+    //if selected color
+    if (selectedColor === 'rainbow') {
+        let hex = (Math.floor(Math.random() * 16777215).toString(16));
+        console.log(hex);
+        e.target.style.cssText = `background-color: #${hex}`;
     }
-    else if (selectedColor === 'rainbow') {
-
+    else {
+        console.log(color);
+        e.target.style.cssText = `background-color: ${color}`;
     }
 }
