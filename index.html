@@ -11,7 +11,16 @@
 
 <body>
     <h1>Etch-A-Sketch</h1>
-    <div id="drawing-board"></div>
+    <div id="content">
+        <div id="controls">
+            <div><input type="color" id="color-selection"></div>
+            <div><button id="color-select">Color</button></div>
+            <div><button id="black">Black</button></div>
+            <div><button id="rainbow">Rainbow</button></div>
+            <div><input type="range" min="5" max="100" value="16" id="grid-size"></div>
+        </div>
+        <div id="drawing-board" draggable="false">Drawing Board</div>
+    </div>
 </body>
 
 </html>
