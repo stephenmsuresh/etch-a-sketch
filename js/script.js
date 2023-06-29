@@ -1,10 +1,18 @@
+//to add:
+//letting user know what value they are selecting on the slider to fine tune selection
+//letting user know what "pen" color is selected (perhaps by changing button highlight color)
+
 const board = document.querySelector("#drawing-board");
+
+//initial values
 const gridSize = document.querySelector('#grid-size');
 let color = '#000000';
 let sizeDisplay = document.querySelector('#size-display');
-createGrid(gridSize.value);
 sizeDisplay.innerText = gridSize.value;
+//create grid with initial value of gridSize
+createGrid(gridSize.value);
 
+//slider changes grid size
 gridSize.addEventListener('change', (e) => {
     createGrid(gridSize.value);
     sizeDisplay.innerText = `${gridSize.value}`;
@@ -20,14 +28,11 @@ function createGrid(rowsAndCols) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
             cell.setAttribute('draggable', 'false');
-            //https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element
-            // (['click', 'hover']).forEach((evt) => {
-            //     cell.addEventListener(evt, (e) => {
-            //         colorIn(e, color);
-            //     })
-            // })
-            cell.addEventListener('mouseover', e => colorIn(e, color));
-            cell.addEventListener('click', e => colorIn(e, color));
+            (['click', 'mouseover']).forEach((evt) => {
+                cell.addEventListener(evt, (e) => {
+                    colorIn(e, color);
+                })
+            });
             grid.appendChild(cell);
         }
         board.appendChild(grid);
@@ -66,7 +71,7 @@ function clearGrid() {
 function colorIn(e, selectedColor) {
     //if left click button is not pressed don't do anything
     if (e.buttons !== 1 && e.type !== 'click') return;
-    //if selected color
+
     if (selectedColor === 'rainbow') {
         let hex = (Math.floor(Math.random() * 16777215).toString(16));
         e.target.style.cssText = `background-color: #${hex}`;
